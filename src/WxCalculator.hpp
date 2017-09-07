@@ -51,4 +51,4 @@ namespace toycalc
     };
 }
 
-#endif WXCALCULATOR_H
+#endif // WXCALCULATOR_H
