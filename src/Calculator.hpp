@@ -75,8 +75,14 @@ namespace toycalc
          * display.
          *
          * \param listener The listener to add.
+         *
+         * const std::function<void(std::string)>
          */
-        void AddDisplayListener(const std::function<void(std::string)> listener);
+        template <typename Listener>
+        void AddDisplayListener(Listener listener)
+        {
+            displayListeners.push_back(listener);
+        }
 
     private:
 

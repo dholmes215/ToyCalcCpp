@@ -32,7 +32,8 @@ bool WxCalculator::OnInit()
     return true;
 }
 
-wxButton * createButton(wxWindow * const parent, const wxString label, const std::function<void(wxCommandEvent &)> action)
+template <typename Action>
+wxButton * createButton(wxWindow * const parent, const wxString label, Action action)
 {
     wxButton * button = new wxButton(parent, wxID_ANY, label);
     wxFont buttonFont = button->GetFont();

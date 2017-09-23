@@ -101,11 +101,6 @@ const std::string Calculator::GetDisplayString() const
     return out;
 }
 
-void Calculator::AddDisplayListener(const std::function<void(std::string)> listener)
-{
-    displayListeners.push_back(listener);
-}
-
 void Calculator::PerformOperation()
 {
     switch (currentOperation) {

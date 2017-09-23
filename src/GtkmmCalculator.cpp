@@ -23,7 +23,8 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 
 using namespace toycalc;
 
-void configureButton(Gtk::Button & button, const Glib::ustring & label, const std::function<void(void)> action)
+template <typename Action>
+void configureButton(Gtk::Button & button, const Glib::ustring & label, Action action)
 {
     button.set_label(""); // Create the child label widget so we can get it
     Gtk::Label * buttonLabel = static_cast<Gtk::Label *>(button.get_child());
