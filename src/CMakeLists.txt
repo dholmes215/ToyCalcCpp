@@ -32,3 +32,12 @@ include_directories(${GTKMM_INCLUDE_DIRS})
 
 add_executable(GtkmmCalculator Calculator.cpp Calculator.hpp GtkmmCalculator.cpp GtkmmCalculator.hpp)
 target_link_libraries(GtkmmCalculator ${GTKMM_LIBRARIES})
+
+
+
+
+# Qt
+
+find_package(Qt5Widgets REQUIRED)
+add_executable(QtCalculator Calculator.cpp Calculator.hpp QtCalculator.cpp)
+target_link_libraries(QtCalculator Qt5::Widgets)
