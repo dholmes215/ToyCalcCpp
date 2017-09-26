@@ -41,3 +41,12 @@ target_link_libraries(GtkmmCalculator ${GTKMM_LIBRARIES})
 find_package(Qt5Widgets REQUIRED)
 add_executable(QtCalculator Calculator.cpp Calculator.hpp QtCalculator.cpp)
 target_link_libraries(QtCalculator Qt5::Widgets)
+
+
+
+
+# FLTK
+
+find_package(FLTK REQUIRED)
+add_executable(FltkCalculator Calculator.cpp Calculator.hpp FltkCalculator.cpp)
+target_link_libraries(FltkCalculator ${FLTK_LIBRARIES})
