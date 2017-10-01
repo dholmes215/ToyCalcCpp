@@ -17,11 +17,18 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+#include <array>
 #include <gtkmm/application.h>
+#include <gtkmm/box.h>
+#include <gtkmm/button.h>
+#include <gtkmm/grid.h>
+#include <gtkmm/label.h>
+#include <gtkmm/window.h>
 
-#include "GtkmmCalculator.hpp"
+#include "Calculator.hpp"
 
-using namespace toycalc;
+namespace calc {
 
 template <typename Action>
 void configureButton(Gtk::Button & button, const Glib::ustring & label, Action action)
@@ -37,90 +44,110 @@ void configureButton(Gtk::Button & button, const Glib::ustring & label, Action a
     button.signal_clicked().connect(action);
 }
 
-GtkmmCalculator::GtkmmCalculator()
-    : mainBox(Gtk::ORIENTATION_VERTICAL, 10),
-      displayLabel("", Gtk::ALIGN_END),
-      buttonGrid(),
-      digitButtons(),
-      addButton(),
-      subButton(),
-      mulButton(),
-      divButton(),
-      eqButton(),
-      calc()
+/**
+ * Window implementing a calculator.
+ */
+class GtkmmCalculator : public Gtk::Window
 {
-    set_border_width(10);
-    set_default_size(240, 240);
-    set_title("ToyCalcCpp");
-
-    //button.signal_clicked().connect(sigc::mem_fun(*this, &GtkmmCalculator::on_button_clicked));
-    //button.signal_clicked().connect([](){ std::cout << "Hello World" << std::endl; });
-
-    add(mainBox);
-
-    displayLabel.set_markup("<span font='32'>0</span>");
-
-    Gtk::Label & displayLabelRef = displayLabel;
-    calc.AddDisplayListener([&displayLabelRef](std::string s) {
-        displayLabelRef.set_markup(Glib::ustring::compose("<span font='32'>%1</span>", s));
-    });
-
-    mainBox.add(displayLabel);
-    mainBox.add(buttonGrid);
-
-    Calculator & calcRef = calc;
-    for (int i=0; i<=9; i++)
+public:
+    GtkmmCalculator() :
+        mainBox(Gtk::ORIENTATION_VERTICAL, 10),
+        displayLabel("", Gtk::ALIGN_END),
+        buttonGrid(),
+        digitButtons(),
+        addButton(),
+        subButton(),
+        mulButton(),
+        divButton(),
+        eqButton(),
+        calc()
     {
-        configureButton(digitButtons[i], Glib::ustring::compose("%1", i), [&calcRef, i](){ calcRef.PressDigit(i); });
+        set_border_width(10);
+        set_default_size(240, 240);
+        set_title("Gtkmm Calculator");
+
+        //button.signal_clicked().connect(sigc::mem_fun(*this, &GtkmmCalculator::on_button_clicked));
+        //button.signal_clicked().connect([](){ std::cout << "Hello World" << std::endl; });
+
+        add(mainBox);
+
+        displayLabel.set_markup("<span font='32'>0</span>");
+
+        Gtk::Label & displayLabelRef = displayLabel;
+        calc.AddDisplayListener([&displayLabelRef](std::string s) {
+            displayLabelRef.set_markup(Glib::ustring::compose("<span font='32'>%1</span>", s));
+        });
+
+        mainBox.add(displayLabel);
+        mainBox.add(buttonGrid);
+
+        Calculator & calcRef = calc;
+        for (int i=0; i<=9; i++)
+        {
+            configureButton(digitButtons[i], Glib::ustring::compose("%1", i), [&calcRef, i](){ calcRef.PressDigit(i); });
+        }
+
+        configureButton(addButton, "+", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Add); });
+        configureButton(subButton, "-", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Subtract); });
+        configureButton(mulButton, "*", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Multiply); });
+        configureButton(divButton, "/", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Divide); });
+        configureButton(eqButton, "=", [&calcRef](){ calcRef.PressEquals(); });
+
+        buttonGrid.attach(digitButtons[7], 0, 0, 1, 1);
+        buttonGrid.attach(digitButtons[8], 1, 0, 1, 1);
+        buttonGrid.attach(digitButtons[9], 2, 0, 1, 1);
+        buttonGrid.attach(digitButtons[4], 0, 1, 1, 1);
+        buttonGrid.attach(digitButtons[5], 1, 1, 1, 1);
+        buttonGrid.attach(digitButtons[6], 2, 1, 1, 1);
+        buttonGrid.attach(digitButtons[1], 0, 2, 1, 1);
+        buttonGrid.attach(digitButtons[2], 1, 2, 1, 1);
+        buttonGrid.attach(digitButtons[3], 2, 2, 1, 1);
+        buttonGrid.attach(digitButtons[0], 0, 3, 2, 1);
+
+        buttonGrid.attach(addButton, 3, 0, 1, 1);
+        buttonGrid.attach(subButton, 3, 1, 1, 1);
+        buttonGrid.attach(mulButton, 3, 2, 1, 1);
+        buttonGrid.attach(divButton, 3, 3, 1, 1);
+        buttonGrid.attach(eqButton, 2, 3, 1, 1);
+
+        // Show everything.
+        for (int i=0; i<=9; i++) {
+            digitButtons[i].show();
+        }
+        addButton.show();
+        subButton.show();
+        mulButton.show();
+        divButton.show();
+        eqButton.show();
+        displayLabel.show();
+        buttonGrid.show();
+        mainBox.show();
+        show();
     }
 
-    configureButton(addButton, "+", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Add); });
-    configureButton(subButton, "-", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Subtract); });
-    configureButton(mulButton, "*", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Multiply); });
-    configureButton(divButton, "/", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Divide); });
-    configureButton(eqButton, "=", [&calcRef](){ calcRef.PressEquals(); });
+    virtual ~GtkmmCalculator() {}
 
-    buttonGrid.attach(digitButtons[7], 0, 0, 1, 1);
-    buttonGrid.attach(digitButtons[8], 1, 0, 1, 1);
-    buttonGrid.attach(digitButtons[9], 2, 0, 1, 1);
-    buttonGrid.attach(digitButtons[4], 0, 1, 1, 1);
-    buttonGrid.attach(digitButtons[5], 1, 1, 1, 1);
-    buttonGrid.attach(digitButtons[6], 2, 1, 1, 1);
-    buttonGrid.attach(digitButtons[1], 0, 2, 1, 1);
-    buttonGrid.attach(digitButtons[2], 1, 2, 1, 1);
-    buttonGrid.attach(digitButtons[3], 2, 2, 1, 1);
-    buttonGrid.attach(digitButtons[0], 0, 3, 2, 1);
+private:
+    Gtk::Box mainBox;
+    Gtk::Label displayLabel;
+    Gtk::Grid buttonGrid;
+    std::array<Gtk::Button, 10> digitButtons;
+    Gtk::Button addButton;
+    Gtk::Button subButton;
+    Gtk::Button mulButton;
+    Gtk::Button divButton;
+    Gtk::Button eqButton;
 
-    buttonGrid.attach(addButton, 3, 0, 1, 1);
-    buttonGrid.attach(subButton, 3, 1, 1, 1);
-    buttonGrid.attach(mulButton, 3, 2, 1, 1);
-    buttonGrid.attach(divButton, 3, 3, 1, 1);
-    buttonGrid.attach(eqButton, 2, 3, 1, 1);
+    Calculator calc;
+};
 
-    // Show everything.
-    for (int i=0; i<=9; i++) {
-        digitButtons[i].show();
-    }
-    addButton.show();
-    subButton.show();
-    mulButton.show();
-    divButton.show();
-    eqButton.show();
-    displayLabel.show();
-    buttonGrid.show();
-    mainBox.show();
-    show();
-}
-
-GtkmmCalculator::~GtkmmCalculator()
-{
-}
+} // namespace calc;
 
 int main(int argc, char ** argv)
 {
     auto app = Gtk::Application::create(argc, argv, "us.dholmes.toycalc");
 
-    GtkmmCalculator calc;
+    calc::GtkmmCalculator calc;
 
 	return app->run(calc);
 }

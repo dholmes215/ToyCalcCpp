@@ -8,7 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 find_package(wxWidgets COMPONENTS core base REQUIRED)
 include(${wxWidgets_USE_FILE})
 
-add_executable(WxCalculator Calculator.cpp Calculator.hpp WxCalculator.cpp WxCalculator.hpp)
+add_executable(WxCalculator Calculator.cpp Calculator.hpp WxCalculator.cpp)
 
 if (WIN32)
     # Needed by wxWidgets on Windows to call WinMain() instead of main()
@@ -30,7 +30,7 @@ pkg_check_modules(GTKMM gtkmm-3.0)
 link_directories(${GTKMM_LIBRARY_DIRS})
 include_directories(${GTKMM_INCLUDE_DIRS})
 
-add_executable(GtkmmCalculator Calculator.cpp Calculator.hpp GtkmmCalculator.cpp GtkmmCalculator.hpp)
+add_executable(GtkmmCalculator Calculator.cpp Calculator.hpp GtkmmCalculator.cpp)
 target_link_libraries(GtkmmCalculator ${GTKMM_LIBRARIES})
 
 

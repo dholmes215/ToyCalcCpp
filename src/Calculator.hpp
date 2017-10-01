@@ -25,7 +25,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include <vector>
 
-namespace toycalc
+namespace calc
 {
     /**
      * A simple calculator. The public interface and behavior of this class are

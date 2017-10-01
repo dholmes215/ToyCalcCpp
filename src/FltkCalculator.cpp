@@ -26,7 +26,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Calculator.hpp"
 
-using namespace toycalc;
+namespace calc {
 
 struct DigitCallbackData
 {
@@ -42,45 +42,49 @@ struct OpCallbackData
     OpCallbackData(Calculator::Operation op, Calculator * calc) : op(op), calc(calc) {};
 };
 
-void PressDigit(Fl_Widget *, void * arg)
+void pressDigit(Fl_Widget *, void * arg)
 {
     DigitCallbackData * callbackData = static_cast<DigitCallbackData *>(arg);
     callbackData->calc->PressDigit(callbackData->digit);
 }
 
-void PressOperation(Fl_Widget *, void * arg)
+void pressOperation(Fl_Widget *, void * arg)
 {
     OpCallbackData * callbackData = static_cast<OpCallbackData *>(arg);
     callbackData->calc->PressOperation(callbackData->op);
 }
 
-void PressEquals(Fl_Widget *, void * arg)
+void pressEquals(Fl_Widget *, void * arg)
 {
     Calculator * calc = static_cast<Calculator *>(arg);
     calc->PressEquals();
 }
 
-Fl_Button * CreateDigitButton(int x, int y, int w, int h, const char * label, const DigitCallbackData & data)
+Fl_Button * createDigitButton(int x, int y, int w, int h, const char * label, const DigitCallbackData & data)
 {
     Fl_Button * button = new Fl_Button(x, y, w, h, label);
-    button->callback((Fl_Callback *)PressDigit, (void *)(&data));
+    button->callback((Fl_Callback *)pressDigit, (void *)(&data));
 
     return button;
 }
 
-Fl_Button * CreateOpButton(int x, int y, int w, int h, const char * label, const OpCallbackData & data)
+Fl_Button * createOpButton(int x, int y, int w, int h, const char * label, const OpCallbackData & data)
 {
     Fl_Button * button = new Fl_Button(x, y, w, h, label);
-    button->callback((Fl_Callback *)PressOperation, (void *)(&data));
+    button->callback((Fl_Callback *)pressOperation, (void *)(&data));
 
     return button;
 }
+
+} // namespace calc
 
 int main(int argc, char ** argv)
 {
+    using namespace calc;
+
     Calculator calc;
     Fl_Window *window = new Fl_Window(192, 240);
-    window->label("ToyCalcCpp");
+    window->label("FLTK Calculator");
 
     Fl_Output *display = new Fl_Output(0, 0, 240, 48);
     display->align(FL_ALIGN_RIGHT);
@@ -95,16 +99,16 @@ int main(int argc, char ** argv)
         DIGIT_CALLBACK_DATA[i].calc = &calc;
     }
     std::array<Fl_Button *, 10> digitButtons;
-    digitButtons[0] = CreateDigitButton( 0, 192, 96, 48, "0", DIGIT_CALLBACK_DATA[0]);
-    digitButtons[1] = CreateDigitButton( 0, 144, 48, 48, "1", DIGIT_CALLBACK_DATA[1]);
-    digitButtons[2] = CreateDigitButton(48, 144, 48, 48, "2", DIGIT_CALLBACK_DATA[2]);
-    digitButtons[3] = CreateDigitButton(96, 144, 48, 48, "3", DIGIT_CALLBACK_DATA[3]);
-    digitButtons[4] = CreateDigitButton( 0,  96, 48, 48, "4", DIGIT_CALLBACK_DATA[4]);
-    digitButtons[5] = CreateDigitButton(48,  96, 48, 48, "5", DIGIT_CALLBACK_DATA[5]);
-    digitButtons[6] = CreateDigitButton(96,  96, 48, 48, "6", DIGIT_CALLBACK_DATA[6]);
-    digitButtons[7] = CreateDigitButton( 0,  48, 48, 48, "7", DIGIT_CALLBACK_DATA[7]);
-    digitButtons[8] = CreateDigitButton(48,  48, 48, 48, "8", DIGIT_CALLBACK_DATA[8]);
-    digitButtons[9] = CreateDigitButton(96,  48, 48, 48, "9", DIGIT_CALLBACK_DATA[9]);
+    digitButtons[0] = createDigitButton( 0, 192, 96, 48, "0", DIGIT_CALLBACK_DATA[0]);
+    digitButtons[1] = createDigitButton( 0, 144, 48, 48, "1", DIGIT_CALLBACK_DATA[1]);
+    digitButtons[2] = createDigitButton(48, 144, 48, 48, "2", DIGIT_CALLBACK_DATA[2]);
+    digitButtons[3] = createDigitButton(96, 144, 48, 48, "3", DIGIT_CALLBACK_DATA[3]);
+    digitButtons[4] = createDigitButton( 0,  96, 48, 48, "4", DIGIT_CALLBACK_DATA[4]);
+    digitButtons[5] = createDigitButton(48,  96, 48, 48, "5", DIGIT_CALLBACK_DATA[5]);
+    digitButtons[6] = createDigitButton(96,  96, 48, 48, "6", DIGIT_CALLBACK_DATA[6]);
+    digitButtons[7] = createDigitButton( 0,  48, 48, 48, "7", DIGIT_CALLBACK_DATA[7]);
+    digitButtons[8] = createDigitButton(48,  48, 48, 48, "8", DIGIT_CALLBACK_DATA[8]);
+    digitButtons[9] = createDigitButton(96,  48, 48, 48, "9", DIGIT_CALLBACK_DATA[9]);
 
     const std::array<OpCallbackData,4> OP_CALLBACK_DATA = {{
             { Calculator::Operation::Add, &calc },
@@ -112,13 +116,13 @@ int main(int argc, char ** argv)
             { Calculator::Operation::Multiply, &calc },
             { Calculator::Operation::Divide, &calc }
     }};
-    Fl_Button * addButton = CreateOpButton(144, 48,  48, 48, "+",        OP_CALLBACK_DATA[0]);
-    Fl_Button * subButton = CreateOpButton(144, 96,  48, 48, "-",        OP_CALLBACK_DATA[1]);
-    Fl_Button * mulButton = CreateOpButton(144, 144, 48, 48, u8"\u00d7", OP_CALLBACK_DATA[2]);
-    Fl_Button * divButton = CreateOpButton(144, 192, 48, 48, u8"\u00f7", OP_CALLBACK_DATA[3]);
+    Fl_Button * addButton = createOpButton(144, 48,  48, 48, "+",        OP_CALLBACK_DATA[0]);
+    Fl_Button * subButton = createOpButton(144, 96,  48, 48, "-",        OP_CALLBACK_DATA[1]);
+    Fl_Button * mulButton = createOpButton(144, 144, 48, 48, u8"\u00d7", OP_CALLBACK_DATA[2]);
+    Fl_Button * divButton = createOpButton(144, 192, 48, 48, u8"\u00f7", OP_CALLBACK_DATA[3]);
 
     Fl_Button * eqButton  = new Fl_Button(96, 192, 48, 48, "=");
-    eqButton->callback((Fl_Callback *)PressEquals, static_cast<void *>(&calc));
+    eqButton->callback((Fl_Callback *)pressEquals, static_cast<void *>(&calc));
 
     window->end();
     window->show(argc, argv);

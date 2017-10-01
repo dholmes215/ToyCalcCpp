@@ -24,7 +24,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Calculator.hpp"
 
-using namespace toycalc;
+using namespace calc;
 
 
 /**
@@ -64,8 +64,9 @@ int main(int argc, char ** argv)
 {
     QApplication app(argc, argv);
 
-
     QWidget widget;
+    widget.setWindowTitle("Qt Calculator");
+
     Calculator calc;
 
     QGridLayout * mainLayout = new QGridLayout;

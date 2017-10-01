@@ -23,7 +23,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 
 const int32_t MAX_DIGITS = 8;
 
-using namespace toycalc;
+using namespace calc;
 
 Calculator::Calculator()
     :
@@ -79,6 +79,7 @@ void Calculator::PressEquals()
         input = storedOperand;
         currentOperation = storedOperation;
     }
+
     PerformOperation();
     storedOperation = currentOperation;
     currentOperation = Operation::None;
