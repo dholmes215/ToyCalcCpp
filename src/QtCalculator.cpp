@@ -47,12 +47,20 @@ public:
         f.setPointSize(24);
         setFont(f);
 
+        // This causes the buttons to expand to fill their grid cell, both
+        // horizontally (which is their default) and vertically (NOT their
+        // default).  Qt layouts determine size and positioning of widgets
+        // based on size policies and size hints.
+        setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
         // Configure action handler.
         connect(this, &QPushButton::clicked, action);
     }
 
     QSize sizeHint() const override
     {
+        // If we don't override the size hint, the default value will cause
+        // the buttons to be smaller than I'd like.
         QSize size = QPushButton::sizeHint();
         size.rwidth() = 50;
         return size;
@@ -78,6 +86,7 @@ int main(int argc, char ** argv)
     calc.AddDisplayListener([displayLabel](std::string s) {
         displayLabel->setText(QString::fromStdString(s)); });
     displayLabel->setAlignment(Qt::AlignRight);
+    displayLabel->setMaximumHeight(50);
     mainLayout->addWidget(displayLabel, 0, 0, 1, 4);
 
     std::array<QPushButton *, 10> digitButtons;

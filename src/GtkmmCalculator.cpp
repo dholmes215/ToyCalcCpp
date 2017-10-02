@@ -39,8 +39,13 @@ void configureButton(Gtk::Button & button, const Glib::ustring & label, Action a
     {
         buttonLabel->set_markup(Glib::ustring::compose("<span font='24'>%1</span>", label));
     }
+
+    // GTK lays out widgets according to their expand and size request
+    // properties. I'm overriding the defaults here to cause them to expand
+    // and to prevent them from being too small.
     button.set_hexpand(true);
     button.set_vexpand(true);
+    button.set_size_request(50, 50);
     button.signal_clicked().connect(action);
 }
 
@@ -63,7 +68,6 @@ public:
         calc()
     {
         set_border_width(10);
-        set_default_size(240, 240);
         set_title("Gtkmm Calculator");
 
         //button.signal_clicked().connect(sigc::mem_fun(*this, &GtkmmCalculator::on_button_clicked));

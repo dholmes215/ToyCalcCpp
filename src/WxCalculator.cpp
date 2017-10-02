@@ -35,6 +35,11 @@ wxButton * createButton(wxWindow * const parent, const wxString label, Action ac
     wxFont buttonFont = button->GetFont();
     buttonFont.SetPointSize(24);
     button->SetFont(buttonFont);
+
+    // By default, the buttons are wider than I'd like, so I override the size
+    // hints to get them to the size I want.
+    button->SetSizeHints(50,50);
+
     button->Bind(wxEVT_BUTTON, action);
 
     return button;
@@ -57,18 +62,17 @@ public:
     WxCalcFrame(Calculator & calc) : wxFrame(nullptr, wxID_ANY, _T("wxWidgets Calculator"), wxDefaultPosition, wxSize(300, 300))
     {
         wxPanel * panel = new wxPanel(this, wxID_ANY);
-
         wxGridBagSizer * sizer = new wxGridBagSizer();
 
-        wxStaticText * display = new wxStaticText(panel, wxID_ANY, calc.GetDisplayString());
+        wxStaticText * display = new wxStaticText(panel, wxID_ANY,
+                calc.GetDisplayString());
         wxFont displayFont = display->GetFont();
         displayFont.SetPointSize(32);
-        display->SetWindowStyle(wxALIGN_RIGHT | wxST_NO_AUTORESIZE);
         display->SetFont(displayFont);
 
         calc.AddDisplayListener([display](std::string s) { display->SetLabel(s); });
 
-        sizer->Add(display, wxGBPosition(0, 0), wxGBSpan(1, 4), wxEXPAND);
+        sizer->Add(display, wxGBPosition(0, 0), wxGBSpan(1, 4), wxALIGN_RIGHT);
         sizer->Add(createDigitButton(calc, panel, 0), wxGBPosition(4, 0), wxGBSpan(1, 2), wxEXPAND);
         sizer->Add(createDigitButton(calc, panel, 1), wxGBPosition(3, 0), wxDefaultSpan, wxEXPAND);
         sizer->Add(createDigitButton(calc, panel, 2), wxGBPosition(3, 1), wxDefaultSpan, wxEXPAND);
@@ -102,17 +106,22 @@ public:
         sizer->AddGrowableCol(1);
         sizer->AddGrowableCol(2);
         sizer->AddGrowableCol(3);
-        sizer->AddGrowableRow(0);
-        sizer->AddGrowableRow(1);
-        sizer->AddGrowableRow(2);
-        sizer->AddGrowableRow(3);
-        sizer->AddGrowableRow(4);
+        // The orientation is what prevents the display row from growing when
+        // the window is resized.
+        sizer->AddGrowableRow(0, 0),
+        sizer->AddGrowableRow(1, 1);
+        sizer->AddGrowableRow(2, 1);
+        sizer->AddGrowableRow(3, 1);
+        sizer->AddGrowableRow(4, 1);
 
         sizer->SetFlexibleDirection(wxBOTH);
-        sizer->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
 
+        // Associates the sizer with the panel, fits the panel to the sizer's
+        // contents, and prevents it from shrinking to smaller than that.
         panel->SetSizerAndFit(sizer);
 
+        // Fits the window (wxFrame) to the sizer's contents, and prevents it
+        // from shrinking smaller than that.
         sizer->SetSizeHints(this);
     }
 };
