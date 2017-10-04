@@ -21,6 +21,14 @@ target_link_libraries(GtkmmCalculator ${GTKMM_LIBRARIES})
 
 
 
+# gtkmm/glade
+add_executable(GtkmmGladeCalculator Calculator.cpp Calculator.hpp GtkmmGladeCalculator.cpp)
+target_include_directories(GtkmmGladeCalculator PRIVATE ${GTKMM_INCLUDE_DIRS})
+target_link_libraries(GtkmmGladeCalculator ${GTKMM_LIBRARIES})
+
+
+
+
 # Qt
 
 find_package(Qt5Widgets REQUIRED)
