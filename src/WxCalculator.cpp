@@ -88,9 +88,9 @@ public:
             [&calc](wxCommandEvent &) { calc.PressOperation(Calculator::Operation::Add); });
         wxButton * subButton = createButton(panel, "-",
             [&calc](wxCommandEvent &) { calc.PressOperation(Calculator::Operation::Subtract); });
-        wxButton * mulButton = createButton(panel, "*",
+        wxButton * mulButton = createButton(panel, wxString::FromUTF8(u8"\u00d7"),
             [&calc](wxCommandEvent &) { calc.PressOperation(Calculator::Operation::Multiply); });
-        wxButton * divButton = createButton(panel, "/",
+        wxButton * divButton = createButton(panel, wxString::FromUTF8(u8"\u00f7"),
             [&calc](wxCommandEvent &) { calc.PressOperation(Calculator::Operation::Divide); });
         wxButton * eqButton = createButton(panel, "=",
             [&calc](wxCommandEvent &) { calc.PressEquals(); });

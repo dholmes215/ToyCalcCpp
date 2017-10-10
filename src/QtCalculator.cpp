@@ -98,8 +98,8 @@ int main(int argc, char ** argv)
 
     QPushButton * addButton = new CalcButton("+", &widget, [&calc](){ calc.PressOperation(Calculator::Operation::Add); });
     QPushButton * subButton = new CalcButton("-", &widget, [&calc](){ calc.PressOperation(Calculator::Operation::Subtract); });
-    QPushButton * mulButton = new CalcButton("*", &widget, [&calc](){ calc.PressOperation(Calculator::Operation::Multiply); });
-    QPushButton * divButton = new CalcButton("/", &widget, [&calc](){ calc.PressOperation(Calculator::Operation::Divide); });
+    QPushButton * mulButton = new CalcButton(u8"\u00d7", &widget, [&calc](){ calc.PressOperation(Calculator::Operation::Multiply); });
+    QPushButton * divButton = new CalcButton(u8"\u00f7", &widget, [&calc](){ calc.PressOperation(Calculator::Operation::Divide); });
     QPushButton * eqButton = new CalcButton("=", &widget, [&calc](){ calc.PressEquals(); });
 
     mainLayout->addWidget(digitButtons[7], 1, 0, 1, 1);

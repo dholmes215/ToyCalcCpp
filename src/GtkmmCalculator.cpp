@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <array>
 #include <gtkmm/application.h>
 #include <gtkmm/box.h>
@@ -93,8 +92,8 @@ public:
 
         configureButton(addButton, "+", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Add); });
         configureButton(subButton, "-", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Subtract); });
-        configureButton(mulButton, "*", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Multiply); });
-        configureButton(divButton, "/", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Divide); });
+        configureButton(mulButton, u8"\u00d7", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Multiply); });
+        configureButton(divButton, u8"\u00f7", [&calcRef](){ calcRef.PressOperation(Calculator::Operation::Divide); });
         configureButton(eqButton, "=", [&calcRef](){ calcRef.PressEquals(); });
 
         buttonGrid.attach(digitButtons[7], 0, 0, 1, 1);

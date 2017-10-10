@@ -118,8 +118,8 @@ int main(int argc, char ** argv)
     }};
     Fl_Button * addButton = createOpButton(144, 48,  48, 48, "+",        OP_CALLBACK_DATA[0]);
     Fl_Button * subButton = createOpButton(144, 96,  48, 48, "-",        OP_CALLBACK_DATA[1]);
-    Fl_Button * mulButton = createOpButton(144, 144, 48, 48, u8"\u00d7", OP_CALLBACK_DATA[2]);
-    Fl_Button * divButton = createOpButton(144, 192, 48, 48, u8"\u00f7", OP_CALLBACK_DATA[3]);
+    Fl_Button * mulButton = createOpButton(144, 144, 48, 48, "\u00d7", OP_CALLBACK_DATA[2]);
+    Fl_Button * divButton = createOpButton(144, 192, 48, 48, "\u00f7", OP_CALLBACK_DATA[3]);
 
     Fl_Button * eqButton  = new Fl_Button(96, 192, 48, 48, "=");
     eqButton->callback((Fl_Callback *)pressEquals, static_cast<void *>(&calc));
