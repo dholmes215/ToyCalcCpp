@@ -6,7 +6,20 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # Build Calculator by itself to link into other executables.
 add_library(Calculator STATIC Calculator.cpp Calculator.hpp)
+add_library(CCalculator STATIC CCalculator.cpp CCalculator.h Calculator.cpp Calculator.hpp)
 
+
+
+find_package(PkgConfig)
+
+
+# GTK+
+
+pkg_check_modules(GTK gtk+-3.0)
+add_definitions(${GTK_CFLAGS_OTHER})
+add_executable(GtkCalculator GtkCalculator.c)
+target_include_directories(GtkCalculator PRIVATE ${GTK_INCLUDE_DIRS})
+target_link_libraries(GtkCalculator CCalculator ${GTK_LIBRARIES})
 
 
 
@@ -14,7 +27,6 @@ add_library(Calculator STATIC Calculator.cpp Calculator.hpp)
 
 # TODO: Test and fix on Windows
 
-find_package(PkgConfig)
 pkg_check_modules(GTKMM gtkmm-3.0)
 
 add_executable(GtkmmCalculator GtkmmCalculator.cpp)
