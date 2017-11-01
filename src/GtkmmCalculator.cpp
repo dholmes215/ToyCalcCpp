@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <array>
+#include "Calculator.hpp"
+
 #include <gtkmm/application.h>
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>
@@ -25,7 +26,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 #include <gtkmm/label.h>
 #include <gtkmm/window.h>
 
-#include "Calculator.hpp"
+#include <array>
 
 namespace calc {
 
@@ -68,9 +69,6 @@ public:
     {
         set_border_width(10);
         set_title("Gtkmm Calculator");
-
-        //button.signal_clicked().connect(sigc::mem_fun(*this, &GtkmmCalculator::on_button_clicked));
-        //button.signal_clicked().connect([](){ std::cout << "Hello World" << std::endl; });
 
         add(mainBox);
 
@@ -144,13 +142,38 @@ private:
     Calculator calc;
 };
 
+/**
+ * We subclass Gtk::Application to override "on_activate".
+ */
+class GtkmmCalculatorApplication : public Gtk::Application
+{
+public:
+    GtkmmCalculatorApplication() :
+        Gtk::Application("us.dholmes.gtkmm_calculator")
+    {
+    }
+
+protected:
+    void on_activate() override
+    {
+        // Note the "naked new"... while gtkmm is usually pretty good about
+        // supporting modern C++ style, I'm not sure how to avoid this one.
+        auto calcWindow = new GtkmmCalculator;
+
+        // This associates the window with the application.  When all the
+        // windows are closed, the application will exit.
+        add_window(*calcWindow);
+
+        // When the user clicks the 'x', delete the window.
+        calcWindow->signal_hide().connect([calcWindow](){ delete calcWindow; });
+    }
+};
+
 } // namespace calc;
 
 int main(int argc, char ** argv)
 {
-    auto app = Gtk::Application::create(argc, argv, "us.dholmes.toycalc");
+    auto app = new calc::GtkmmCalculatorApplication;
 
-    calc::GtkmmCalculator calc;
-
-	return app->run(calc);
+	return app->run(argc, argv);
 }
