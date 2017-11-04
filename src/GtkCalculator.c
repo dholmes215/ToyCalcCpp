@@ -154,6 +154,18 @@ static void press_digit_button(GtkWidget * button, gpointer data) {
     calculator_press_digit(callbackData->calculator, callbackData->digit);
 }
 
+static void press_operation_button(GtkWidget * button, gpointer data) {
+
+    struct OperatorCallbackData * callbackData = (struct OperatorCallbackData *)data;
+    calculator_press_operation(callbackData->calculator, callbackData->op);
+}
+
+static void press_equals_button(GtkWidget * button, gpointer data) {
+
+    GtkCalculator * calculator = (GtkCalculator *)data;
+    calculator_press_equals(calculator->calculator);
+}
+
 static void activate(GtkApplication * app, gpointer user_data) {
 
     GtkWidget * window = GTK_WIDGET(gtk_calculator_new(app));
@@ -199,6 +211,12 @@ static void activate(GtkApplication * app, gpointer user_data) {
     GtkWidget * mulButton = create_button("\xc3\x97");
     GtkWidget * divButton = create_button("\xc3\xb7");
     GtkWidget * eqButton = create_button("=");
+
+    g_signal_connect(addButton, "clicked", G_CALLBACK(press_operation_button), &(CALC_GTKCALCULATOR(window)->operatorCallbackData[1]));
+    g_signal_connect(subButton, "clicked", G_CALLBACK(press_operation_button), &(CALC_GTKCALCULATOR(window)->operatorCallbackData[2]));
+    g_signal_connect(mulButton, "clicked", G_CALLBACK(press_operation_button), &(CALC_GTKCALCULATOR(window)->operatorCallbackData[3]));
+    g_signal_connect(divButton, "clicked", G_CALLBACK(press_operation_button), &(CALC_GTKCALCULATOR(window)->operatorCallbackData[4]));
+    g_signal_connect(eqButton, "clicked", G_CALLBACK(press_equals_button), CALC_GTKCALCULATOR(window));
 
     gtk_grid_attach(GTK_GRID(buttonGrid), addButton, 3, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(buttonGrid), subButton, 3, 1, 1, 1);
