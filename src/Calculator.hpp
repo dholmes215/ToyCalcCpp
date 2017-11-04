@@ -105,6 +105,7 @@ namespace calc
         Display currentDisplay;
         bool equalsPressed;
         bool error;
+        std::string errorString;
 
         void PerformOperation();
         int64_t GetDisplayValue() const;

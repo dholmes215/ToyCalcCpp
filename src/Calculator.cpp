@@ -35,7 +35,8 @@ Calculator::Calculator()
     storedOperation(Operation::None),
     currentDisplay(Display::Input),
     equalsPressed(false),
-    error(false)
+    error(false),
+    errorString()
 {
 }
 
@@ -94,7 +95,7 @@ const std::string Calculator::GetDisplayString() const
 {
     std::string out;
     if (error) {
-        out = "error";
+        out = errorString;
     }
     else {
         out = std::to_string(GetDisplayValue());
@@ -120,11 +121,17 @@ void Calculator::PerformOperation()
     case Operation::Divide:
         if (input == 0) {
             error = true;
+            errorString = "error";
         }
         else {
             accumulator /= input;
         }
         break;
+    }
+
+    if (accumulator >= std::pow(10, MAX_DIGITS)) {
+        error = true;
+        errorString = "overflow";
     }
 }
 
