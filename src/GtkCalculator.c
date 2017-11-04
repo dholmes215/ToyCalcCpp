@@ -157,6 +157,8 @@ static void press_digit_button(GtkWidget * button, gpointer data) {
 static void activate(GtkApplication * app, gpointer user_data) {
 
     GtkWidget * window = GTK_WIDGET(gtk_calculator_new(app));
+
+    // TODO: This all should probably be moved inside of the GtkCalculator "class".
     gtk_window_set_title(GTK_WINDOW(window), "GTK+ Calculator");
     gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
@@ -209,13 +211,16 @@ static void activate(GtkApplication * app, gpointer user_data) {
 
 int main(int argc, char ** argv) {
 
-    // GtkApplications are normally single-process. If a second process is
-    // launched, it will "activate" the first process's GtkApplication,
-    // causing the first process to open a second window.  The second process
-    // will then exit.
     GtkApplication * app = gtk_application_new("us.dholmes.gtk_calculator", G_APPLICATION_FLAGS_NONE);
+
+    // GtkApplications are normally single-process. If a second process is
+    // launched, it will "activate" the first process's GtkApplication and
+    // then exit.  If you want your process to have multiple "instances", then
+    // you need to create your windows in an "activate" handler and not in
+    // main.
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
     int status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
+
     return status;
 }

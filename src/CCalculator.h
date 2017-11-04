@@ -17,6 +17,9 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef CCALCULATOR_H
+#define CCALCULATOR_H
+
 // C interface to class Calculator.
 
 struct Calculator * calculator_new();
@@ -30,3 +33,5 @@ void calculator_press_operation(struct Calculator * calculator, int op);
 void calculator_press_equals(struct Calculator * calculator);
 
 void calculator_add_display_listener(struct Calculator * calculator, void (*listenerFunc)(void *, const char *), void * listenerFuncData);
+
+#endif // CCALCULATOR_H

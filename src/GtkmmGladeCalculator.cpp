@@ -31,7 +31,9 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 
 int main(int argc, char ** argv)
 {
-    auto app = Gtk::Application::create(argc, argv, "us.dholmes.toycalc.glade");
+    // FIXME: all this needs to be moved out of here.  No initialization in main!
+
+    auto app = Gtk::Application::create(argc, argv, "us.dholmes.gtkmm_glade_calculator");
 
     auto builder = Gtk::Builder::create();
     try {

@@ -30,10 +30,9 @@ using namespace calc;
 /**
  * Button customized for a calculator.
  *
- * I would normally consider this an excessive and unnecessary use of
- * inheritance, but it appears that overriding sizeHint is the only way to get
- * the default size to be what I want.  The official Qt calculator example
- * does it the same way.
+ * A subclass is necessary because it appears that overriding sizeHint is
+ * the only way to get the default size to be what I want.  The official
+ * Qt calculator example does it the same way.
  */
 class CalcButton : public QPushButton
 {
@@ -53,6 +52,9 @@ public:
         // based on size policies and size hints.
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+        setMinimumHeight(50);
+        setMinimumWidth(50);
+
         // Configure action handler.
         connect(this, &QPushButton::clicked, action);
     }
@@ -66,7 +68,6 @@ public:
         return size;
     }
 };
-
 
 int main(int argc, char ** argv)
 {

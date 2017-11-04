@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#ifndef CALCULATOR_HPP
+#define CALCULATOR_HPP
 
 #include <cstdint>
 #include <functional>
@@ -113,4 +113,4 @@ namespace calc
     };
 }
 
-#endif // CALCULATOR_H
+#endif // CALCULATOR_HPP
