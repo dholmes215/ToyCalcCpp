@@ -24,7 +24,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 #include <FL/Fl_Output.H>
 #include <FL/Fl_Window.H>
 
-#include "Calculator.hpp"
+#include "../Calculator.hpp"
 
 namespace calc {
 

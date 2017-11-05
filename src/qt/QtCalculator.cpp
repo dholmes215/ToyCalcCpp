@@ -22,7 +22,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 #include <QLabel>
 #include <QLayout>
 
-#include "Calculator.hpp"
+#include "../Calculator.hpp"
 
 using namespace calc;
 

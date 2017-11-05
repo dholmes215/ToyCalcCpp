@@ -20,7 +20,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef QTDESIGNERCALCULATOR_HPP
 #define QTDESIGNERCALCULATOR_HPP
 
-#include "Calculator.hpp"
+#include "../Calculator.hpp"
 
 #include <QWidget>
 

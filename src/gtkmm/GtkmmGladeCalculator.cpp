@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "../Calculator.hpp"
+
 #include <gtkmm/application.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
@@ -26,8 +28,6 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 #include <array>
 #include <exception>
 #include <iostream>
-
-#include "Calculator.hpp"
 
 int main(int argc, char ** argv)
 {

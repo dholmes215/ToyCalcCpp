@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Calculator.hpp"
+#include "../Calculator.hpp"
 
 #include <gtkmm/application.h>
 #include <gtkmm/box.h>

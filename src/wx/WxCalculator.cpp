@@ -24,7 +24,7 @@ along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <wx/gbsizer.h>
 
-#include "Calculator.hpp"
+#include "../Calculator.hpp"
 
 namespace calc {
 
