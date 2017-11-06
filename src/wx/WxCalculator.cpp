@@ -72,7 +72,10 @@ public:
 
         calc.AddDisplayListener([display](std::string s) { display->SetLabel(s); });
 
-        sizer->Add(display, wxGBPosition(0, 0), wxGBSpan(1, 4), wxALIGN_RIGHT);
+        // TODO: I cannot for the life of me figure out how to get this
+        // right-alignment working properly.
+//        sizer->Add(display, wxGBPosition(0, 0), wxGBSpan(1, 4), wxALIGN_RIGHT);
+        sizer->Add(display, wxGBPosition(0, 0), wxGBSpan(1, 4));
         sizer->Add(createDigitButton(calc, panel, 0), wxGBPosition(4, 0), wxGBSpan(1, 2), wxEXPAND);
         sizer->Add(createDigitButton(calc, panel, 1), wxGBPosition(3, 0), wxDefaultSpan, wxEXPAND);
         sizer->Add(createDigitButton(calc, panel, 2), wxGBPosition(3, 1), wxDefaultSpan, wxEXPAND);
