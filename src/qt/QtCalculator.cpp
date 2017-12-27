@@ -17,12 +17,14 @@ You should have received a copy of the GNU General Public License
 along with ToyCalcCpp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "../Calculator.hpp"
+
 #include <QApplication>
 #include <QPushButton>
 #include <QLabel>
 #include <QLayout>
 
-#include "../Calculator.hpp"
+#include <array>
 
 using namespace calc;
 
