@@ -53,7 +53,7 @@ namespace calc
         void PressDigit(const int8_t digit);
 
         /**
-         * Press an operation button on the calculator (+-/*).
+         * Press an operation button on the calculator (+ - * /).
          *
          * \param operation The operation to perform.
          */
